@@ -1,0 +1,151 @@
+<html>
+  <head>
+    <title>To-Do List</title>
+    <style type="text/css">
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 30px;
+        font-size: 28px;
+        color: #333;
+      }
+
+      form {
+        max-width: 500px;
+        margin: 0 auto;
+        display: flex;
+      }
+
+      form input {
+        flex-grow: 1;
+        height: 40px;
+        padding: 0 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px 0 0 5px;
+      }
+
+      form input:focus {
+        outline: none;
+      }
+
+      form button {
+        width: 120px;
+        height: 40px;
+        font-size: 16px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+      }
+
+      form button:focus {
+        outline: none;
+      }
+
+      form button:active {
+        background-color: #222;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-width: 500px;
+        margin: 20px auto 0;
+      }
+
+      ul li {
+        height: 40px;
+        padding: 0 20px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+
+      ul li input {
+        margin-right: 10px;
+      }
+
+      ul li input:focus {
+        outline: none;
+      }
+
+      li.completed {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>To-Do List</h1>
+
+    <form>
+      <input type="text" id="task" placeholder="Enter a new task">
+      <button type="button" id="add-task-button">Add Task</button>
+    </form>
+
+    <ul id="task-list"></ul>
+
+    <script>
+        // 取得添加任務按鈕和任務清單元素
+        const addTaskButton = document.getElementById('add-task-button');
+        const taskList = document.getElementById('task-list');
+
+        // 定义添加任务函数
+        function addTask() {
+            // 取得任务文本框元素并取得其中的文本
+            const taskInput = document.getElementById('task');
+            const task = taskInput.value;
+
+            // 如果任务文本不为空，则添加任务到任务清单中
+            if (task) {
+                // 创建新的 li 元素并设置文本内容
+                const newTask = document.createElement('li');
+                newTask.innerHTML = `
+                <input type="checkbox">
+                <label>${task}</label>
+                `;
+
+                // 添加監聽器，在多選框發生變化時應用斜線樣式
+                const checkbox = newTask.querySelector('input[type="checkbox"]');
+                checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    newTask.classList.add('completed');
+                } else {
+                    newTask.classList.remove('completed');
+                }
+                });
+
+                // 将新的 li 元素添加到任务清单中
+                taskList.appendChild(newTask);
+
+                // 清空任务文本框
+                taskInput.value = '';
+            }
+        }
+        // 在點擊添加任務按鈕時執行添加任務函數
+        addTaskButton.addEventListener('click', addTask);
+    </script>
+  </body>
+</html>
+<!-- 
+在這段程式碼中，有幾個JavaScript函式可以注意到：
+document.getElementById：這是一個JavaScript函數，可以用於檢索頁面中具有指定ID的HTML元素。例如，document.getElementById('add-task-button')會檢索具有ID“add-task-button”的按鈕元素。
+addEventListener：這是一個JavaScript函數，可以用於為HTML元素添加事件聆聽器。例如，addTaskButton.addEventListener('click', addTask)會在點擊addTaskButton按鈕時調用addTask函數。
+querySelector：這是一個JavaScript函數，可以用於檢索HTML元素的子元素。例如，newTask.querySelector('input[type="checkbox"]')會檢索newTask元素中具有類型為“checkbox”的input子元素。
+classList.add和classList.remove：這些是JavaScript函數，可以用於向HTML元素添加或刪除CSS類。例如，newTask.classList.add('completed')會向newTask元素添加“completed”類，而newTask.classList.remove('completed')會從newTask元素中刪除“completed”類。
+createElement：這是一個JavaScript函數，可以用於創建新的HTML元素。例如，document.createElement('li')會創建一個新的li元素。
+innerHTML：這是一個JavaScript屬性，可以用於獲取或設置HTML元素的內容。例如，newTask.innerHTML = '<input type="checkbox"><label>${task}</label>'會將HTML字符串設置為newTask元素的內容。這些函數和屬性都是JavaScript中常用的工具，用於操作HTML元素，創建網頁應用程序的功能和交互性。
+
+此外，這段程式碼還使用了JavaScript的匿名函數語法，例如在addTask函數中的addEventListener語句，以及在addTask函數中的checkbox變量的定義中。匿名函數是沒有名稱的函數，可以在需要時直接創建和調用。這種語法可以使您的程序更簡潔，並且在某些情況下更容易維護。
+ -->

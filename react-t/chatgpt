@@ -1,0 +1,70 @@
+import React, { Component } from 'react';
+
+class TodoList extends Component {
+  // Set initial state
+  state = {
+    items: [],
+    text: ''
+  };
+
+  // Handle change in input field
+  handleChange = (event) => {
+    this.setState({ text: event.target.value });
+  }
+
+  // Handle form submission
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Add new item to list
+    if (this.state.text.length > 0) {
+      this.setState(state => ({
+        items: state.items.concat(state.text),
+        text: ''
+      }));
+    }
+  }
+
+  // Handle item removal
+  handleRemove = (index) => {
+    this.setState(state => ({
+      items: state.items.filter((_, i) => i !== index)
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        <h3>TODO</h3>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            onChange={this.handleChange}
+            value={this.state.text}
+          />
+          <button>
+            Add #{this.state.items.length + 1}
+          </button>
+        </form>
+        <ul>
+          {this.state.items.map((item, index) => (
+            <li key={index}>
+              {item}
+              <button onClick={() => this.handleRemove(index)}>
+                Remove
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+/* 
+This is a very simple example that demonstrates the basic concepts of how to use React to create a to-do list. It includes an input field for adding items to the list, a list of items, and the ability to add and remove items from the list.
+
+In this example, the to-do list is managed using React's state feature, which allows the component to keep track of the list of items and update the list when new items are added or removed. The render() method is used to display the list of items and the input field in the browser.
+
+For a more detailed and complete example, you can check out the React documentation or search for tutorials and examples online.
+ */
+
+

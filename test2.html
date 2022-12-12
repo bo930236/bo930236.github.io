@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>ITHome Crawler</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#search").click(function(){
+                var keyword = $("#keyword").val();
+                $.ajax({
+                    url: "https://ithelp.ithome.com.tw/search?q=" + keyword,
+                    type: "GET",
+                    success: function(data){
+                        var results = $(data).find(".qa-list__title");
+                        $("#results").html("");
+                        results.each(function(){
+                            var title = $(this).text();
+                            var link = $(this).attr("href");
+                            $("#results").append("<p><a href='" + link + "'>" + title + "</a></p>");
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>ITHome Crawler</h1>
+    <input type="text" id="keyword" placeholder="輸入關鍵字">
+    <button id="search">搜尋</button>
+    <div id="results"></div>
+</body>
+</html>
